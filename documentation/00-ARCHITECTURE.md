@@ -23,37 +23,55 @@ Ce document présente l'architecture du système et son évolution à travers le
 
 Système simple avec API REST, interface web, et IA en mode local. Toutes les données sont en mémoire.
 
-### Diagramme d'Architecture
+### Diagramme d'Architecture - Vue Simplifiée
+
+```mermaid
+flowchart LR
+    User[👤 Utilisateur]
+    Frontend[🌐 Frontend<br/>HTML + JS]
+    Backend[⚙️ Backend<br/>FastAPI]
+    Data[💾 Données<br/>En Mémoire]
+    AI[🤖 IA<br/>Mode Local]
+    
+    User --> Frontend
+    Frontend -->|HTTP/REST| Backend
+    Backend --> Data
+    Backend --> AI
+    AI --> Data
+    
+    style User fill:#61DAFB,stroke:#333,stroke-width:3px,color:#000,font-size:16px
+    style Frontend fill:#E34F26,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Backend fill:#009688,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Data fill:#FF6B6B,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style AI fill:#FFA500,stroke:#333,stroke-width:3px,color:#000,font-size:16px
+```
+
+### Architecture Détaillée
 
 ```mermaid
 graph TB
-    subgraph "Frontend"
-        Browser[Navigateur Web]
-        HTML[index.html]
-        JS[app.js - JavaScript]
-        CSS[Tailwind CSS]
-    end
+    Browser[Navigateur Web]
+    HTML[index.html]
+    JS[app.js]
     
-    subgraph "Backend - FastAPI"
-        API[server.py<br/>API REST]
-        Data[employee_data.py<br/>Données en mémoire]
-        AI[ai_agent.py<br/>Agent IA Local]
-    end
+    API[server.py<br/>FastAPI]
+    Data[employee_data.py<br/>Liste Python]
+    AI[ai_agent.py<br/>Règles if/else]
     
     Browser --> HTML
     HTML --> JS
-    JS --> CSS
-    JS -->|HTTP/REST| API
+    JS -->|Requêtes HTTP| API
     
     API --> Data
     API --> AI
-    AI --> Data
+    AI -->|Lit les données| Data
     
-    style Data fill:#ffcccc
-    style AI fill:#ffffcc
-    
-    classDef current fill:#90EE90
-    class API,HTML,JS current
+    style Browser fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style HTML fill:#E34F26,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style JS fill:#F7DF1E,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Data fill:#FF6B6B,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style AI fill:#FFA500,stroke:#333,stroke-width:4px,color:#000,font-size:18px
 ```
 
 ### Composants
@@ -84,42 +102,58 @@ graph TB
 - IA réelle avec Claude 3 Sonnet
 - Credentials AWS sécurisés
 
-### Diagramme d'Architecture
+### Diagramme d'Architecture - Vue Simplifiée
+
+```mermaid
+flowchart LR
+    User[👤 Utilisateur]
+    Frontend[🌐 Frontend<br/>HTML + JS]
+    Backend[⚙️ Backend<br/>FastAPI]
+    Data[💾 Données<br/>En Mémoire]
+    AWS[☁️ AWS Bedrock<br/>Claude 3]
+    
+    User --> Frontend
+    Frontend -->|HTTP/REST| Backend
+    Backend --> Data
+    Backend -->|Appel IA| AWS
+    AWS -->|Réponse| Backend
+    
+    style User fill:#61DAFB,stroke:#333,stroke-width:3px,color:#000,font-size:16px
+    style Frontend fill:#E34F26,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Backend fill:#009688,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Data fill:#FF6B6B,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style AWS fill:#FF6600,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+```
+
+### Architecture Détaillée
 
 ```mermaid
 graph TB
-    subgraph "Frontend"
-        Browser[Navigateur Web]
-        HTML[index.html]
-        JS[app.js]
-    end
+    Browser[Navigateur]
+    JS[app.js]
     
-    subgraph "Backend - FastAPI"
-        API[server.py<br/>API REST]
-        Data[employee_data.py<br/>Données en mémoire]
-        AI[ai_agent.py<br/>Agent IA]
-    end
+    API[server.py<br/>FastAPI]
+    Data[Données<br/>En Mémoire]
+    AI[ai_agent.py]
     
-    subgraph "AWS Cloud"
-        Bedrock[AWS Bedrock<br/>Claude 3 Sonnet]
-        IAM[IAM<br/>Credentials]
-    end
+    Bedrock[AWS Bedrock<br/>Claude 3]
+    IAM[AWS IAM]
     
-    Browser --> HTML
-    HTML --> JS
-    JS -->|HTTP/REST| API
+    Browser --> JS
+    JS -->|HTTP| API
     
     API --> Data
     API --> AI
-    AI --> Data
     AI -->|boto3| Bedrock
     AI --> IAM
     
-    style Bedrock fill:#ff9900
-    style IAM fill:#ff9900
-    
-    classDef new fill:#90EE90
-    class Bedrock,IAM new
+    style Browser fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style JS fill:#F7DF1E,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Data fill:#FF6B6B,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style AI fill:#FFA500,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style IAM fill:#DD4814,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
 ```
 
 ### Nouveaux Composants
@@ -145,49 +179,58 @@ graph TB
 - Migrations Alembic
 - Alternative : Xata
 
-### Diagramme d'Architecture
+### Diagramme d'Architecture - Vue Simplifiée
+
+```mermaid
+flowchart LR
+    User[👤 Utilisateur]
+    Frontend[🌐 Frontend]
+    Backend[⚙️ Backend]
+    DB[💾 PostgreSQL<br/>Neon]
+    AWS[☁️ AWS Bedrock]
+    
+    User --> Frontend
+    Frontend -->|HTTP/REST| Backend
+    Backend --> DB
+    Backend --> AWS
+    
+    style User fill:#61DAFB,stroke:#333,stroke-width:3px,color:#000,font-size:16px
+    style Frontend fill:#E34F26,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Backend fill:#009688,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+    style AWS fill:#FF6600,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+```
+
+### Architecture Détaillée
 
 ```mermaid
 graph TB
-    subgraph "Frontend"
-        Browser[Navigateur Web]
-        JS[app.js]
-    end
+    Browser[Navigateur]
+    JS[app.js]
     
-    subgraph "Backend - FastAPI"
-        API[server.py<br/>API REST]
-        ORM[SQLAlchemy<br/>ORM]
-        Models[models.py<br/>Modèles de données]
-        AI[ai_agent.py<br/>Agent IA]
-    end
+    API[server.py]
+    ORM[SQLAlchemy]
+    AI[ai_agent.py]
     
-    subgraph "Base de Données"
-        Neon[(PostgreSQL<br/>Neon.tech)]
-        Migrations[Alembic<br/>Migrations]
-    end
+    DB[(PostgreSQL<br/>Neon)]
     
-    subgraph "AWS Cloud"
-        Bedrock[AWS Bedrock<br/>Claude 3]
-    end
+    Bedrock[AWS Bedrock<br/>Claude 3]
     
     Browser --> JS
-    JS -->|HTTP/REST| API
-    
+    JS -->|HTTP| API
     API --> ORM
-    ORM --> Models
-    Models --> Neon
-    Migrations --> Neon
-    
+    ORM --> DB
     API --> AI
     AI --> Bedrock
     AI --> ORM
     
-    style Neon fill:#4169E1
-    style Migrations fill:#4169E1
-    style ORM fill:#4169E1
-    
-    classDef new fill:#90EE90
-    class Neon,Migrations,ORM,Models new
+    style Browser fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style JS fill:#F7DF1E,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style ORM fill:#336791,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style AI fill:#FFA500,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
 ```
 
 ### Nouveaux Composants
@@ -215,63 +258,65 @@ graph TB
 - Rôles et permissions (RBAC)
 - Protection des endpoints
 
-### Diagramme d'Architecture
+### Diagramme d'Architecture - Vue Simplifiée
+
+```mermaid
+flowchart LR
+    User[👤 Utilisateur]
+    Login[🔐 Login]
+    Auth[🛡️ Auth<br/>Clerk/JWT]
+    Backend[⚙️ Backend<br/>+ RBAC]
+    DB[💾 PostgreSQL<br/>+ Users]
+    
+    User --> Login
+    Login --> Auth
+    Auth -->|Token| Backend
+    Backend --> DB
+    
+    style User fill:#61DAFB,stroke:#333,stroke-width:3px,color:#000,font-size:16px
+    style Login fill:#34D399,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Auth fill:#6C5CE7,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+    style Backend fill:#009688,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+```
+
+### Architecture Détaillée
 
 ```mermaid
 graph TB
-    subgraph "Frontend"
-        Browser[Navigateur Web]
-        JS[app.js]
-        Login[Login UI]
-    end
+    Browser[Navigateur]
+    Login[Interface Login]
     
-    subgraph "Authentication"
-        Clerk[Clerk Service]
-        JWT[JWT Handler]
-        Auth[Auth Middleware]
-    end
+    Clerk[Clerk Service]
+    Auth[Middleware Auth]
     
-    subgraph "Backend - FastAPI"
-        API[server.py<br/>API REST]
-        RBAC[RBAC<br/>Permissions]
-        ORM[SQLAlchemy]
-    end
+    API[FastAPI]
+    RBAC[RBAC Engine]
     
-    subgraph "Base de Données"
-        DB[(PostgreSQL)]
-        Users[Users Table]
-        Roles[Roles Table]
-    end
-    
-    subgraph "AWS Cloud"
-        Bedrock[AWS Bedrock]
-    end
+    DB[(PostgreSQL)]
+    Users[Table Users]
+    Roles[Table Roles]
     
     Browser --> Login
     Login --> Clerk
-    Login --> JWT
-    
-    JS -->|HTTP + Token| Auth
+    Login -->|Token JWT| Auth
     Auth --> API
     API --> RBAC
-    RBAC --> API
+    RBAC -->|Vérifie| Roles
     
-    API --> ORM
-    ORM --> DB
+    API --> DB
     DB --> Users
     DB --> Roles
     
-    API --> Bedrock
-    
-    style Clerk fill:#6C5CE7
-    style JWT fill:#6C5CE7
-    style Auth fill:#6C5CE7
-    style RBAC fill:#6C5CE7
-    style Users fill:#6C5CE7
-    style Roles fill:#6C5CE7
-    
-    classDef new fill:#90EE90
-    class Clerk,JWT,Auth,RBAC,Users,Roles new
+    style Browser fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style Login fill:#34D399,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Clerk fill:#6C5CE7,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style Auth fill:#7C3AED,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style RBAC fill:#DC2626,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style Users fill:#0EA5E9,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Roles fill:#0284C7,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
 ```
 
 ### Nouveaux Composants
@@ -356,14 +401,23 @@ graph TB
     API --> Auth
     API --> Bedrock
     
-    style S3 fill:#ff9900
-    style SES fill:#ff9900
-    style StripeAPI fill:#635BFF
-    style Webhooks fill:#635BFF
-    style Export fill:#00B894
-    
-    classDef new fill:#90EE90
-    class S3,SES,Files,Email,Stripe,StripeAPI,Webhooks,Export,Subscriptions,FilesMeta new
+    style Browser fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
+    style Upload fill:#34D399,stroke:#333,stroke-width:2px,color:#fff
+    style Payment fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
+    style API fill:#009688,stroke:#333,stroke-width:2px,color:#fff
+    style Auth fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
+    style Files fill:#0891B2,stroke:#333,stroke-width:2px,color:#fff
+    style Email fill:#DC2626,stroke:#333,stroke-width:2px,color:#fff
+    style Stripe fill:#635BFF,stroke:#333,stroke-width:2px,color:#fff
+    style Export fill:#059669,stroke:#333,stroke-width:2px,color:#fff
+    style S3 fill:#FF9900,stroke:#333,stroke-width:3px,color:#000
+    style SES fill:#DD4814,stroke:#333,stroke-width:3px,color:#fff
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
+    style StripeAPI fill:#635BFF,stroke:#333,stroke-width:3px,color:#fff
+    style Webhooks fill:#5B21B6,stroke:#333,stroke-width:2px,color:#fff
+    style RDS fill:#1E40AF,stroke:#333,stroke-width:3px,color:#fff
+    style Subscriptions fill:#0EA5E9,stroke:#333,stroke-width:2px,color:#fff
+    style FilesMeta fill:#0284C7,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Nouveaux Composants
@@ -452,17 +506,22 @@ graph TB
     API --> Conversations
     Conversations --> Messages
     
-    style Vectors fill:#FF6B6B
-    style RAG fill:#FF6B6B
-    style Coordinator fill:#4ECDC4
-    style HRAgent fill:#4ECDC4
-    style RecruiterAgent fill:#4ECDC4
-    style CompAgent fill:#4ECDC4
-    style Embeddings fill:#FF6B6B
-    style Search fill:#FF6B6B
-    
-    classDef new fill:#90EE90
-    class Vectors,RAG,Coordinator,HRAgent,RecruiterAgent,CompAgent,Embeddings,Search,Conversations,Messages,BedrockEmbed new
+    style Browser fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
+    style Chat fill:#34D399,stroke:#333,stroke-width:2px,color:#fff
+    style API fill:#009688,stroke:#333,stroke-width:2px,color:#fff
+    style Coordinator fill:#0891B2,stroke:#333,stroke-width:3px,color:#fff
+    style HRAgent fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
+    style RecruiterAgent fill:#0C4A6E,stroke:#333,stroke-width:2px,color:#fff
+    style CompAgent fill:#075985,stroke:#333,stroke-width:2px,color:#fff
+    style RAG fill:#DC2626,stroke:#333,stroke-width:3px,color:#fff
+    style Embeddings fill:#B91C1C,stroke:#333,stroke-width:2px,color:#fff
+    style Search fill:#991B1B,stroke:#333,stroke-width:2px,color:#fff
+    style DB fill:#1E40AF,stroke:#333,stroke-width:3px,color:#fff
+    style Vectors fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
+    style Conversations fill:#0EA5E9,stroke:#333,stroke-width:2px,color:#fff
+    style Messages fill:#0284C7,stroke:#333,stroke-width:2px,color:#fff
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
+    style BedrockEmbed fill:#FF9900,stroke:#333,stroke-width:2px,color:#000
 ```
 
 ### Nouveaux Composants
@@ -763,12 +822,47 @@ graph TB
     Memory --> RDS
     Coordinator --> Memory
     
-    style WebApp fill:#61DAFB
-    style Bedrock fill:#ff9900
-    style RDS fill:#336791
-    style Stripe fill:#635BFF
-    style Grafana fill:#F46800
-    style Redis fill:#DC382D
+    style WebApp fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
+    style Mobile fill:#34D399,stroke:#333,stroke-width:2px,color:#fff
+    style API_Client fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
+    style CloudFront fill:#FF9900,stroke:#333,stroke-width:3px,color:#000
+    style ALB fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
+    style RateLimit fill:#F59E0B,stroke:#333,stroke-width:2px,color:#000
+    style Auth fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
+    style API fill:#009688,stroke:#333,stroke-width:2px,color:#fff
+    style PublicAPI fill:#059669,stroke:#333,stroke-width:2px,color:#fff
+    style RBAC fill:#DC2626,stroke:#333,stroke-width:2px,color:#fff
+    style Quotas fill:#B91C1C,stroke:#333,stroke-width:2px,color:#fff
+    style Cache fill:#991B1B,stroke:#333,stroke-width:2px,color:#fff
+    style Coordinator fill:#0891B2,stroke:#333,stroke-width:3px,color:#fff
+    style HRAgent fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
+    style RecruiterAgent fill:#155E75,stroke:#333,stroke-width:2px,color:#fff
+    style CompAgent fill:#0C4A6E,stroke:#333,stroke-width:2px,color:#fff
+    style CustomAgent fill:#075985,stroke:#333,stroke-width:2px,color:#fff
+    style RAG fill:#DC2626,stroke:#333,stroke-width:3px,color:#fff
+    style Memory fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
+    style RDS fill:#1E40AF,stroke:#333,stroke-width:3px,color:#fff
+    style Replicas fill:#3B82F6,stroke:#333,stroke-width:2px,color:#fff
+    style S3_Files fill:#FF9900,stroke:#333,stroke-width:2px,color:#000
+    style S3_Backups fill:#F59E0B,stroke:#333,stroke-width:2px,color:#000
+    style Redis fill:#DC382D,stroke:#333,stroke-width:3px,color:#fff
+    style ElastiCache fill:#B91C1C,stroke:#333,stroke-width:2px,color:#fff
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
+    style BedrockEmbed fill:#FF9900,stroke:#333,stroke-width:2px,color:#000
+    style SES fill:#DD4814,stroke:#333,stroke-width:2px,color:#fff
+    style SNS fill:#E97435,stroke:#333,stroke-width:2px,color:#fff
+    style Stripe fill:#635BFF,stroke:#333,stroke-width:3px,color:#fff
+    style Clerk_Ext fill:#6C5CE7,stroke:#333,stroke-width:2px,color:#fff
+    style Webhooks fill:#5B21B6,stroke:#333,stroke-width:2px,color:#fff
+    style CloudWatch fill:#DD4814,stroke:#333,stroke-width:2px,color:#fff
+    style Grafana fill:#F46800,stroke:#333,stroke-width:2px,color:#fff
+    style Prometheus fill:#E6522C,stroke:#333,stroke-width:2px,color:#fff
+    style Sentry fill:#362D59,stroke:#333,stroke-width:2px,color:#fff
+    style Logs fill:#2C3E50,stroke:#333,stroke-width:2px,color:#fff
+    style GitHub fill:#24292E,stroke:#333,stroke-width:2px,color:#fff
+    style Actions fill:#2088FF,stroke:#333,stroke-width:2px,color:#fff
+    style DockerHub fill:#2496ED,stroke:#333,stroke-width:2px,color:#fff
+    style Terraform fill:#7B42BC,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Architecture Enterprise Complète
@@ -851,14 +945,28 @@ graph TB
     TenantA_Data --> KMS
     TenantB_Data --> KMS
     
-    style TenantA_Data fill:#FFE5CC
-    style TenantB_Data fill:#CCE5FF
-    style Gateway fill:#00B894
-    style WAF fill:#D63031
-    style Queue fill:#FDCB6E
-    
-    classDef new fill:#90EE90
-    class TenantRouter,TenantResolver,Gateway,Versioning,Queue,EventBus,Workers,WAF,Shield,Secrets,KMS new
+    style TenantA_Data fill:#EF4444,stroke:#333,stroke-width:2px,color:#fff
+    style TenantB_Data fill:#3B82F6,stroke:#333,stroke-width:2px,color:#fff
+    style TenantA_Schema fill:#DC2626,stroke:#333,stroke-width:2px,color:#fff
+    style TenantB_Schema fill:#1D4ED8,stroke:#333,stroke-width:2px,color:#fff
+    style TenantRouter fill:#059669,stroke:#333,stroke-width:3px,color:#fff
+    style TenantResolver fill:#047857,stroke:#333,stroke-width:2px,color:#fff
+    style Gateway fill:#10B981,stroke:#333,stroke-width:3px,color:#fff
+    style Versioning fill:#34D399,stroke:#333,stroke-width:2px,color:#000
+    style RateLimit fill:#6EE7B7,stroke:#333,stroke-width:2px,color:#000
+    style Analytics fill:#A7F3D0,stroke:#333,stroke-width:2px,color:#000
+    style EmployeeService fill:#0891B2,stroke:#333,stroke-width:2px,color:#fff
+    style AIService fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
+    style PaymentService fill:#155E75,stroke:#333,stroke-width:2px,color:#fff
+    style NotificationService fill:#0C4A6E,stroke:#333,stroke-width:2px,color:#fff
+    style FileService fill:#075985,stroke:#333,stroke-width:2px,color:#fff
+    style Queue fill:#F59E0B,stroke:#333,stroke-width:3px,color:#000
+    style EventBus fill:#D97706,stroke:#333,stroke-width:2px,color:#fff
+    style Workers fill:#B45309,stroke:#333,stroke-width:2px,color:#fff
+    style WAF fill:#DC2626,stroke:#333,stroke-width:3px,color:#fff
+    style Shield fill:#991B1B,stroke:#333,stroke-width:2px,color:#fff
+    style Secrets fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
+    style KMS fill:#5B21B6,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Stack Technologique Complet
