@@ -685,14 +685,14 @@ graph TB
 
 ```mermaid
 flowchart TD
-    Users[👥 Utilisateurs<br/>Web + Mobile]
-    CDN[🌐 CloudFront CDN]
-    LB[⚖️ Load Balancer]
-    App[⚙️ Backend API<br/>FastAPI]
-    Agents[🤖 Multi-Agents IA]
-    DB[💾 PostgreSQL<br/>+ pgvector]
-    AWS[☁️ AWS Services<br/>Bedrock + S3 + SES]
-    External[💳 Services Externes<br/>Stripe + Clerk]
+    Users[Utilisateurs<br/>Web + Mobile]
+    CDN[CloudFront CDN]
+    LB[Load Balancer]
+    App[Backend API<br/>FastAPI]
+    Agents[Multi-Agents IA]
+    DB[PostgreSQL<br/>+ pgvector]
+    AWS[AWS Services<br/>Bedrock + S3 + SES]
+    External[Services Externes<br/>Stripe + Clerk]
     
     Users --> CDN
     CDN --> LB
@@ -718,10 +718,10 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    React[⚛️ React App]
+    React[React App]
     CDN[CloudFront]
     LB[Load Balancer]
-    Auth[🔐 Auth]
+    Auth[Auth]
     API[FastAPI]
     
     React --> CDN
@@ -740,7 +740,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    API[⚙️ FastAPI API]
+    API[FastAPI API]
     ORM[SQLAlchemy]
     DB[(PostgreSQL<br/>+ pgvector)]
     Replicas[(Replicas)]
@@ -762,13 +762,13 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Question[❓ Question Utilisateur]
-    Coord[🎯 Coordinator]
-    HR[📊 HR Agent]
-    Recruiter[🔍 Recruiter]
-    Comp[💰 Compensation]
+    Question[Question Utilisateur]
+    Coord[Coordinator]
+    HR[HR Agent]
+    Recruiter[Recruiter]
+    Comp[Compensation]
     RAG[RAG Engine]
-    Bedrock[☁️ AWS Bedrock]
+    Bedrock[AWS Bedrock]
     DB[(PostgreSQL)]
     
     Question --> Coord
@@ -800,11 +800,11 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    API[⚙️ Backend API]
-    S3[📁 AWS S3]
-    Email[📧 SES Email]
-    Stripe[💳 Stripe]
-    Clerk[🔐 Clerk Auth]
+    API[Backend API]
+    S3[AWS S3]
+    Email[SES Email]
+    Stripe[Stripe]
+    Clerk[Clerk Auth]
     
     API --> S3
     API --> Email
@@ -822,10 +822,10 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Dev[👨‍💻 Developer]
+    Dev[Developer]
     GitHub[GitHub]
     Actions[GitHub Actions]
-    Docker[🐳 Docker Build]
+    Docker[Docker Build]
     ECS[AWS ECS]
     
     Dev --> GitHub
@@ -844,11 +844,11 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    App[⚙️ Application]
+    App[Application]
     CloudWatch[CloudWatch]
     Prometheus[Prometheus]
-    Grafana[📊 Grafana]
-    Sentry[🐛 Sentry]
+    Grafana[Grafana]
+    Sentry[Sentry]
     
     App --> CloudWatch
     App --> Sentry
@@ -868,11 +868,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Gateway[🌐 API Gateway]
-    Router[🔀 Tenant Router]
+    Gateway[API Gateway]
+    Router[Tenant Router]
     
-    TenantA[🏢 Tenant A<br/>Company A]
-    TenantB[🏢 Tenant B<br/>Company B]
+    TenantA[Tenant A<br/>Company A]
+    TenantB[Tenant B<br/>Company B]
     
     DBA[(DB Schema A)]
     DBB[(DB Schema B)]
@@ -898,11 +898,11 @@ flowchart TD
 flowchart TD
     Gateway[API Gateway]
     
-    Emp[👥 Employee Service]
-    AI[🤖 AI Service]
-    Pay[💳 Payment Service]
-    Notif[📧 Notification Service]
-    File[📁 File Service]
+    Emp[Employee Service]
+    AI[AI Service]
+    Pay[Payment Service]
+    Notif[Notification Service]
+    File[File Service]
     
     Gateway --> Emp
     Gateway --> AI
@@ -922,10 +922,10 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    Services[⚙️ Services]
-    Queue[📬 Message Queue<br/>SQS/RabbitMQ]
+    Services[Services]
+    Queue[Message Queue<br/>SQS/RabbitMQ]
     EventBus[Event Bus]
-    Workers[👷 Background Workers]
+    Workers[Background Workers]
     
     Services --> Queue
     Queue --> EventBus
@@ -941,12 +941,12 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    Internet[🌍 Internet]
-    WAF[🛡️ WAF<br/>Firewall]
+    Internet[Internet]
+    WAF[WAF<br/>Firewall]
     Shield[AWS Shield<br/>DDoS]
     App[Application]
-    Secrets[🔑 Secrets Manager]
-    KMS[🔐 KMS Encryption]
+    Secrets[Secrets Manager]
+    KMS[KMS Encryption]
     
     Internet --> WAF
     WAF --> Shield
