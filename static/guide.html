@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide d'Utilisation - Système de Gestion des Employés</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .markdown-content h1 { @apply text-3xl font-bold mb-6 text-blue-600 border-b-2 border-blue-200 pb-2; }
+        .markdown-content h2 { @apply text-2xl font-semibold mb-4 text-gray-800 mt-8; }
+        .markdown-content h3 { @apply text-xl font-medium mb-3 text-gray-700 mt-6; }
+        .markdown-content h4 { @apply text-lg font-medium mb-2 text-gray-600 mt-4; }
+        .markdown-content p { @apply mb-4 text-gray-700 leading-relaxed; }
+        .markdown-content ul { @apply mb-4 pl-6; }
+        .markdown-content ol { @apply mb-4 pl-6; }
+        .markdown-content li { @apply mb-2 text-gray-700; }
+        .markdown-content pre { @apply bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto; }
+        .markdown-content code { @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono; }
+        .markdown-content pre code { @apply bg-transparent p-0; }
+        .markdown-content blockquote { @apply border-l-4 border-blue-300 pl-4 italic text-gray-600 mb-4; }
+        .markdown-content table { @apply w-full mb-4 border-collapse; }
+        .markdown-content th { @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-semibold; }
+        .markdown-content td { @apply border border-gray-300 px-4 py-2; }
+        .markdown-content a { @apply text-blue-600 hover:text-blue-800 underline; }
+        .toc-item { @apply py-2 px-3 rounded hover:bg-gray-100 cursor-pointer transition-colors; }
+        .toc-item.active { @apply bg-blue-100 text-blue-700 font-medium; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="/" class="text-white hover:text-blue-200 mr-4">
+                        <i class="fas fa-arrow-left"></i> Retour à l'application
+                    </a>
+                    <h1 class="text-2xl font-bold">
+                        <i class="fas fa-book mr-2"></i>Guide d'Utilisation
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/api/docs" class="text-white hover:text-blue-200" target="_blank">
+                        <i class="fas fa-code mr-1"></i>API Swagger
+                    </a>
+                    <a href="/api/guide" class="text-white hover:text-blue-200" target="_blank">
+                        <i class="fas fa-download mr-1"></i>JSON
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <div class="flex gap-8">
+            <!-- Table of Contents -->
+            <div class="w-1/4">
+                <div class="bg-white rounded-lg shadow-lg p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">
+                        <i class="fas fa-list mr-2"></i>Table des Matières
+                    </h3>
+                    <div id="tableOfContents" class="space-y-1">
+                        <!-- TOC will be generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="w-3/4">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <!-- Loading State -->
+                    <div id="loading" class="text-center py-12">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                        <p class="mt-4 text-gray-600">Chargement du guide...</p>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="error" class="hidden text-center py-12">
+                        <div class="text-red-500 text-4xl mb-4">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Erreur de chargement</h2>
+                        <p class="text-gray-600 mb-4">Impossible de charger le guide d'utilisation.</p>
+                        <button onclick="loadGuide()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            <i class="fas fa-redo mr-2"></i>Réessayer
+                        </button>
+                    </div>
+
+                    <!-- Guide Content -->
+                    <div id="guideContent" class="markdown-content hidden">
+                        <!-- Content will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        let currentGuideData = null;
+
+        async function loadGuide() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const content = document.getElementById('guideContent');
+
+            loading.classList.remove('hidden');
+            error.classList.add('hidden');
+            content.classList.add('hidden');
+
+            try {
+                const response = await fetch('/api/guide');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const guideData = await response.json();
+                currentGuideData = guideData;
+
+                // Render markdown content
+                const htmlContent = marked.parse(guideData.content);
+                content.innerHTML = htmlContent;
+
+                // Generate table of contents
+                generateTableOfContents();
+
+                // Show content
+                loading.classList.add('hidden');
+                content.classList.remove('hidden');
+
+                // Setup scroll handlers
+                setupScrollHandlers();
+
+            } catch (err) {
+                console.error('Error loading guide:', err);
+                loading.classList.add('hidden');
+                error.classList.remove('hidden');
+            }
+        }
+
+        function generateTableOfContents() {
+            const toc = document.getElementById('tableOfContents');
+            const headings = document.querySelectorAll('#guideContent h1, #guideContent h2, #guideContent h3');
+            
+            toc.innerHTML = '';
+
+            headings.forEach((heading, index) => {
+                const id = `heading-${index}`;
+                heading.id = id;
+
+                const level = parseInt(heading.tagName.substring(1));
+                const text = heading.textContent;
+
+                const item = document.createElement('div');
+                item.className = `toc-item text-sm pl-${(level - 1) * 3}`;
+                item.innerHTML = `<a href="#${id}" class="block">${text}</a>`;
+                item.onclick = () => scrollToHeading(id);
+
+                toc.appendChild(item);
+            });
+        }
+
+        function scrollToHeading(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Update active TOC item
+                document.querySelectorAll('.toc-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                event.target.closest('.toc-item').classList.add('active');
+            }
+        }
+
+        function setupScrollHandlers() {
+            const backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', () => {
+                // Show/hide back to top button
+                if (window.scrollY > 300) {
+                    backToTop.classList.remove('hidden');
+                } else {
+                    backToTop.classList.add('hidden');
+                }
+
+                // Update active TOC item based on scroll position
+                const headings = document.querySelectorAll('#guideContent h1, #guideContent h2, #guideContent h3');
+                const tocItems = document.querySelectorAll('.toc-item');
+                
+                let activeIndex = 0;
+                headings.forEach((heading, index) => {
+                    const rect = heading.getBoundingClientRect();
+                    if (rect.top <= 100) {
+                        activeIndex = index;
+                    }
+                });
+
+                tocItems.forEach((item, index) => {
+                    if (index === activeIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+
+            backToTop.onclick = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+        }
+
+        // Search functionality
+        function setupSearch() {
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Rechercher dans le guide...';
+            searchInput.className = 'w-full px-3 py-2 border border-gray-300 rounded-lg mb-4';
+            
+            const toc = document.getElementById('tableOfContents');
+            toc.parentNode.insertBefore(searchInput, toc);
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const tocItems = document.querySelectorAll('.toc-item');
+                
+                tocItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(query) || query === '') {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGuide();
+        });
+    </script>
+</body>
+</html>
