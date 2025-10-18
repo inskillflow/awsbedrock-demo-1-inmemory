@@ -255,12 +255,13 @@ Tous les demos dans l'ordre, avec focus sur :
 ## Documentation
 
 ### Guides de Formation
-1. [00-INDEX_REPOSITORIES.md](00-INDEX_REPOSITORIES.md) - Ce fichier
-2. [01-GUIDE_UTILISATION.md](01-GUIDE_UTILISATION.md) - Guide d'utilisation
-3. [02-PREREQUISITES_ET_INSTALLATION.md](02-PREREQUISITES_ET_INSTALLATION.md) - Prérequis et installation
-4. [03-TECHNOLOGIES_ET_EVOLUTIONS.md](03-TECHNOLOGIES_ET_EVOLUTIONS.md) - Technologies utilisées
-5. [04-PLAN_DE_FORMATION_PROGRESSIVE.md](04-PLAN_DE_FORMATION_PROGRESSIVE.md) - Plan détaillé complet
-6. [05-CHECKLIST_FONCTIONNALITES.md](05-CHECKLIST_FONCTIONNALITES.md) - Checklist des fonctionnalités
+1. [00-ARCHITECTURE.md](00-ARCHITECTURE.md) - Architecture et diagrammes (Mermaid)
+2. [00-INDEX_REPOSITORIES.md](00-INDEX_REPOSITORIES.md) - Ce fichier
+3. [01-GUIDE_UTILISATION.md](01-GUIDE_UTILISATION.md) - Guide d'utilisation
+4. [02-PREREQUISITES_ET_INSTALLATION.md](02-PREREQUISITES_ET_INSTALLATION.md) - Prérequis et installation
+5. [03-TECHNOLOGIES_ET_EVOLUTIONS.md](03-TECHNOLOGIES_ET_EVOLUTIONS.md) - Technologies utilisées
+6. [04-PLAN_DE_FORMATION_PROGRESSIVE.md](04-PLAN_DE_FORMATION_PROGRESSIVE.md) - Plan détaillé complet
+7. [05-CHECKLIST_FONCTIONNALITES.md](05-CHECKLIST_FONCTIONNALITES.md) - Checklist des fonctionnalités
 
 ### Liens Utiles
 - **Organisation GitHub** : https://github.com/inskillflow
