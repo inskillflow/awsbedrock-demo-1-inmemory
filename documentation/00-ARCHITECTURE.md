@@ -274,7 +274,7 @@ flowchart LR
     Backend --> DB
     
     style User fill:#61DAFB,stroke:#333,stroke-width:3px,color:#000,font-size:16px
-    style Login fill:#34D399,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
+    style Login fill:#059669,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
     style Auth fill:#6C5CE7,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
     style Backend fill:#009688,stroke:#333,stroke-width:3px,color:#fff,font-size:16px
     style DB fill:#1E40AF,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
@@ -309,7 +309,7 @@ graph TB
     DB --> Roles
     
     style Browser fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
-    style Login fill:#34D399,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Login fill:#059669,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
     style Clerk fill:#6C5CE7,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
     style Auth fill:#7C3AED,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
     style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
@@ -402,8 +402,8 @@ graph TB
     API --> Bedrock
     
     style Browser fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
-    style Upload fill:#34D399,stroke:#333,stroke-width:2px,color:#fff
-    style Payment fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
+    style Upload fill:#059669,stroke:#333,stroke-width:2px,color:#fff
+    style Payment fill:#047857,stroke:#333,stroke-width:2px,color:#fff
     style API fill:#009688,stroke:#333,stroke-width:2px,color:#fff
     style Auth fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
     style Files fill:#0891B2,stroke:#333,stroke-width:2px,color:#fff
@@ -507,7 +507,7 @@ graph TB
     Conversations --> Messages
     
     style Browser fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
-    style Chat fill:#34D399,stroke:#333,stroke-width:2px,color:#fff
+    style Chat fill:#059669,stroke:#333,stroke-width:2px,color:#fff
     style API fill:#009688,stroke:#333,stroke-width:2px,color:#fff
     style Coordinator fill:#0891B2,stroke:#333,stroke-width:3px,color:#fff
     style HRAgent fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
@@ -823,8 +823,8 @@ graph TB
     Coordinator --> Memory
     
     style WebApp fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
-    style Mobile fill:#34D399,stroke:#333,stroke-width:2px,color:#fff
-    style API_Client fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
+    style Mobile fill:#059669,stroke:#333,stroke-width:2px,color:#fff
+    style API_Client fill:#047857,stroke:#333,stroke-width:2px,color:#fff
     style CloudFront fill:#FF9900,stroke:#333,stroke-width:3px,color:#000
     style ALB fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
     style RateLimit fill:#F59E0B,stroke:#333,stroke-width:2px,color:#000
@@ -951,10 +951,10 @@ graph TB
     style TenantB_Schema fill:#1D4ED8,stroke:#333,stroke-width:2px,color:#fff
     style TenantRouter fill:#059669,stroke:#333,stroke-width:3px,color:#fff
     style TenantResolver fill:#047857,stroke:#333,stroke-width:2px,color:#fff
-    style Gateway fill:#10B981,stroke:#333,stroke-width:3px,color:#fff
-    style Versioning fill:#34D399,stroke:#333,stroke-width:2px,color:#000
-    style RateLimit fill:#6EE7B7,stroke:#333,stroke-width:2px,color:#000
-    style Analytics fill:#A7F3D0,stroke:#333,stroke-width:2px,color:#000
+    style Gateway fill:#047857,stroke:#333,stroke-width:3px,color:#fff
+    style Versioning fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
+    style RateLimit fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
+    style Analytics fill:#059669,stroke:#333,stroke-width:2px,color:#fff
     style EmployeeService fill:#0891B2,stroke:#333,stroke-width:2px,color:#fff
     style AIService fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
     style PaymentService fill:#155E75,stroke:#333,stroke-width:2px,color:#fff
