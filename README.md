@@ -8,6 +8,15 @@ Un système complet de gestion des employés avec API REST FastAPI et interface 
 
 **Caractéristique de cette version** : Données stockées EN MÉMOIRE (non persistantes)
 
+## Documentation
+
+**Deux versions disponibles :**
+
+- **Français (FR)** : `documentation-fr/` - [Version française complète](documentation-fr/README.md)
+- **English (EN)** : `documentation-en/` - [Complete English version](documentation-en/README.md)
+
+Voir les README dans chaque dossier pour la liste complète des documents.
+
 ## Position dans le Parcours
 
 - ⬅️ **Précédent** : Aucun (première version)
