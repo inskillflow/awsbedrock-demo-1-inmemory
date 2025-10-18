@@ -1,6 +1,18 @@
-# Système de Gestion des Employés
+# Système de Gestion des Employés - Demo 1 (En Mémoire)
+
+![Version](https://img.shields.io/badge/demo-1-blue)
+![Difficulty](https://img.shields.io/badge/difficulty-easy-green)
+![Status](https://img.shields.io/badge/status-learning-yellow)
 
 Un système complet de gestion des employés avec API REST FastAPI et interface web moderne.
+
+**Caractéristique de cette version** : Données stockées EN MÉMOIRE (non persistantes)
+
+## Position dans le Parcours
+
+- ⬅️ **Précédent** : Aucun (première version)
+- ➡️ **Suivant** : [Demo 2 - AWS Bedrock RÉEL](https://github.com/inskillflow/awsbedrock-demo-2-aws-bedrock-real) (à venir)
+- 📚 **Plan complet** : Voir [Plan de Formation Progressive](documentation/04-PLAN_DE_FORMATION_PROGRESSIVE.md)
 
 ## Fonctionnalités
 
@@ -109,6 +121,19 @@ Le système est pré-chargé avec :
 - 20+ compétences techniques variées
 - Données réalistes pour démonstration
 
+**IMPORTANT** : Les données sont stockées en mémoire Python (liste `EMPLOYEES` dans `employee_data.py`).
+Toutes les modifications sont **perdues au redémarrage du serveur**.
+
+### Pourquoi en mémoire ?
+
+Cette version est conçue pour l'apprentissage :
+- Pas de configuration de base de données nécessaire
+- Démarrage rapide en 2 minutes
+- Focus sur les concepts FastAPI et IA
+- Base solide pour ajouter la persistance plus tard
+
+**Pour la persistance** : Voir [Demo 2 - PostgreSQL](https://github.com/inskillflow/awsbedrock-demo-2-postgresql)
+
 ## Compétences Supportées
 
 Le système inclut les compétences suivantes :
@@ -183,4 +208,31 @@ Pour changer la configuration, modifiez la section `uvicorn.run()` dans `server.
 
 ---
 
+## Limitations de Demo 1
+
+Cette version est idéale pour apprendre, mais a des limitations :
+
+❌ **Pas de persistance** - Données perdues au redémarrage  
+❌ **Pas d'authentification** - Pas de gestion utilisateurs  
+❌ **Pas de fichiers** - Pas d'upload de CV/photos  
+❌ **Pas de notifications** - Pas d'emails automatiques  
+
+### Prochaines Étapes
+
+Pour ajouter ces fonctionnalités, consultez les versions suivantes :
+
+1. **[Demo 2 - AWS Bedrock RÉEL](https://github.com/inskillflow/awsbedrock-demo-2-aws-bedrock-real)** - Configuration AWS complète ⭐
+2. **[Demo 3 - PostgreSQL](https://github.com/inskillflow/awsbedrock-demo-3-postgresql)** - Persistance des données
+3. **[Demo 5 - JWT Auth](https://github.com/inskillflow/awsbedrock-demo-5-auth-jwt)** - Authentification
+4. **[Demo 7 - Files S3](https://github.com/inskillflow/awsbedrock-demo-7-files-s3)** - Upload de fichiers
+5. **[Demo 8 - Notifications](https://github.com/inskillflow/awsbedrock-demo-8-notifications)** - Emails
+
+**Voir le plan complet** : [Plan de Formation Progressive](documentation/04-PLAN_DE_FORMATION_PROGRESSIVE.md)
+
+---
+
 **Le système est maintenant prêt à être utilisé !**
+
+Ce projet fait partie d'une série de **19 demos progressifs** pour construire un système RH complet avec IA.
+
+**Prochaine étape importante** : [Demo 2 - Configurer AWS Bedrock RÉEL](https://github.com/inskillflow/awsbedrock-demo-2-aws-bedrock-real)
