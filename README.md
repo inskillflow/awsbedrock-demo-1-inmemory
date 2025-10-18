@@ -12,9 +12,9 @@ Un système complet de gestion des employés avec API REST FastAPI et interface 
 
 - ⬅️ **Précédent** : Aucun (première version)
 - ➡️ **Suivant** : [Demo 2 - AWS Bedrock RÉEL](https://github.com/inskillflow/awsbedrock-demo-2-aws-bedrock-real) (à venir)
-- 🏗️ **Architecture** : Voir [Architecture et Évolution](documentation/00-ARCHITECTURE.md)
-- 📚 **Tous les repos** : Voir [Index des Repositories](documentation/00-INDEX_REPOSITORIES.md)
-- 📖 **Plan complet** : Voir [Plan de Formation Progressive](documentation/04-PLAN_DE_FORMATION_PROGRESSIVE.md)
+- 🏗️ **Architecture** : Voir [Architecture et Évolution](documentation-fr/00-ARCHITECTURE.md)
+- 📚 **Tous les repos** : Voir [Index des Repositories](documentation-fr/01-INDEX_REPOSITORIES.md)
+- 📖 **Plan complet** : Voir [Plan de Formation Progressive](documentation-fr/05-PLAN_DE_FORMATION_PROGRESSIVE.md)
 
 ## Fonctionnalités
 
@@ -229,7 +229,7 @@ Pour ajouter ces fonctionnalités, consultez les versions suivantes :
 4. **[Demo 7 - Files S3](https://github.com/inskillflow/awsbedrock-demo-7-files-s3)** - Upload de fichiers
 5. **[Demo 8 - Notifications](https://github.com/inskillflow/awsbedrock-demo-8-notifications)** - Emails
 
-**Voir le plan complet** : [Plan de Formation Progressive](documentation/04-PLAN_DE_FORMATION_PROGRESSIVE.md)
+**Voir le plan complet** : [Plan de Formation Progressive](documentation-fr/05-PLAN_DE_FORMATION_PROGRESSIVE.md)
 
 ---
 
