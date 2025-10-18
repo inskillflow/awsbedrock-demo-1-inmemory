@@ -4,12 +4,12 @@ Un système complet de gestion des employés avec API REST FastAPI et interface 
 
 ## Fonctionnalités
 
-- 🏢 **Gestion des employés** : Ajouter, modifier, supprimer et consulter les employés
-- 🛠️ **Gestion des compétences** : Suivi des compétences techniques de chaque employé
-- 📊 **Tableaux de bord** : Statistiques détaillées sur les employés et départements
-- 🔍 **Filtrage avancé** : Recherche par nom, département, compétences
-- 📱 **Interface responsive** : Interface web moderne et adaptative
-- 🚀 **API REST** : API complète avec documentation automatique
+- **Gestion des employés** : Ajouter, modifier, supprimer et consulter les employés
+- **Gestion des compétences** : Suivi des compétences techniques de chaque employé
+- **Tableaux de bord** : Statistiques détaillées sur les employés et départements
+- **Filtrage avancé** : Recherche par nom, département, compétences
+- **Interface responsive** : Interface web moderne et adaptative
+- **API REST** : API complète avec documentation automatique
 
 ## Structure du Projet
 
@@ -105,9 +105,9 @@ curl "http://localhost:8002/api/employees/skill/Python"
 ## Données par Défaut
 
 Le système est pré-chargé avec :
-- ✅ 5 employés exemples dans différents départements
-- ✅ 20+ compétences techniques variées
-- ✅ Données réalistes pour démonstration
+- 5 employés exemples dans différents départements
+- 20+ compétences techniques variées
+- Données réalistes pour démonstration
 
 ## Compétences Supportées
 
@@ -183,4 +183,4 @@ Pour changer la configuration, modifiez la section `uvicorn.run()` dans `server.
 
 ---
 
-🚀 **Le système est maintenant prêt à être utilisé !**
+**Le système est maintenant prêt à être utilisé !**

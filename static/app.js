@@ -444,15 +444,15 @@ class EmployeeManager {
             
             const statusElement = document.getElementById('agentStatus');
             if (health.agent_status === 'healthy') {
-                statusElement.textContent = health.bedrock_available ? '🤖' : '⚡';
+                statusElement.textContent = health.bedrock_available ? 'AI' : 'OK';
                 statusElement.title = health.bedrock_available ? 'AWS Bedrock' : 'Mode Local';
             } else {
-                statusElement.textContent = '❌';
+                statusElement.textContent = 'ERR';
                 statusElement.title = 'Agent indisponible';
             }
         } catch (error) {
             console.error('Erreur lors de la vérification de l\'agent:', error);
-            document.getElementById('agentStatus').textContent = '❌';
+            document.getElementById('agentStatus').textContent = 'ERR';
         }
     }
 
