@@ -640,18 +640,28 @@ graph TB
     IAM --> Fargate1
     IAM --> Fargate2
     
-    style ECS fill:#ff9900
-    style Fargate1 fill:#ff9900
-    style Fargate2 fill:#ff9900
-    style RDS fill:#ff9900
-    style CloudWatch fill:#ff9900
-    style ALB fill:#ff9900
-    style Grafana fill:#F46800
-    style Prometheus fill:#E6522C
-    style Sentry fill:#362D59
-    
-    classDef new fill:#90EE90
-    class Build,Tests,Deploy,ECS,Fargate1,Fargate2,CloudWatch,Metrics,Alarms,Grafana,Prometheus,Sentry,ALB,VPC,SecGroups new
+    style Dev fill:#2C3E50,stroke:#333,stroke-width:2px,color:#fff
+    style Git fill:#24292E,stroke:#333,stroke-width:2px,color:#fff
+    style Actions fill:#2088FF,stroke:#333,stroke-width:3px,color:#fff
+    style Build fill:#2496ED,stroke:#333,stroke-width:2px,color:#fff
+    style Tests fill:#059669,stroke:#333,stroke-width:2px,color:#fff
+    style Deploy fill:#047857,stroke:#333,stroke-width:2px,color:#fff
+    style ECS fill:#FF9900,stroke:#333,stroke-width:3px,color:#000
+    style Fargate1 fill:#FF6600,stroke:#333,stroke-width:2px,color:#fff
+    style Fargate2 fill:#FF6600,stroke:#333,stroke-width:2px,color:#fff
+    style ALB fill:#DD4814,stroke:#333,stroke-width:3px,color:#fff
+    style RDS fill:#1E40AF,stroke:#333,stroke-width:3px,color:#fff
+    style S3 fill:#FF9900,stroke:#333,stroke-width:2px,color:#000
+    style CloudWatch fill:#DD4814,stroke:#333,stroke-width:2px,color:#fff
+    style Metrics fill:#E97435,stroke:#333,stroke-width:2px,color:#fff
+    style Alarms fill:#DC2626,stroke:#333,stroke-width:2px,color:#fff
+    style VPC fill:#5B21B6,stroke:#333,stroke-width:2px,color:#fff
+    style SecGroups fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
+    style IAM fill:#DD4814,stroke:#333,stroke-width:2px,color:#fff
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
+    style Grafana fill:#F46800,stroke:#333,stroke-width:2px,color:#fff
+    style Prometheus fill:#E6522C,stroke:#333,stroke-width:2px,color:#fff
+    style Sentry fill:#362D59,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Nouveaux Composants
