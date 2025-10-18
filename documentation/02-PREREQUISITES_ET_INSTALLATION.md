@@ -8,13 +8,16 @@ Avant de commencer, assurez-vous d'avoir :
 
 ### 1. Logiciels Requis
 
-- **Python 3.8 ou supérieur**
+- **Python 3.9 à 3.13**
   - Vérifiez avec : `python --version`
   - Téléchargement : https://www.python.org/downloads/
+  - **Recommandé :** Python 3.11 ou 3.12 (plus stable)
+  - **Note :** Python 3.13 fonctionne mais peut avoir des problèmes de compilation
 
 - **pip (gestionnaire de paquets Python)**
   - Normalement installé avec Python
   - Vérifiez avec : `pip --version`
+  - **Important :** Mettez à jour pip : `python -m pip install --upgrade pip`
 
 - **Git (optionnel mais recommandé)**
   - Pour cloner le projet
@@ -260,6 +263,33 @@ Vous devriez recevoir la liste des employés en JSON.
 pip install -r requirements.txt --force-reinstall
 ```
 
+### Problème : "Cargo, the Rust package manager, is not installed" ou erreurs de compilation
+
+Ce problème arrive généralement avec Python 3.13 ou des packages qui doivent être compilés.
+
+**Solution 1 - Mettre à jour pip et réessayer (RECOMMANDÉ) :**
+```bash
+python -m pip install --upgrade pip
+pip install --upgrade setuptools wheel
+pip install -r requirements.txt
+```
+
+**Solution 2 - Installer les packages un par un :**
+```bash
+pip install fastapi uvicorn boto3 pydantic python-multipart
+```
+
+**Solution 3 - Utiliser des versions sans compilation :**
+```bash
+pip install fastapi uvicorn boto3 pydantic --only-binary :all:
+pip install python-multipart
+```
+
+**Solution 4 - Downgrader Python (si vraiment rien ne fonctionne) :**
+- Désinstallez Python 3.13
+- Installez Python 3.11 ou 3.12
+- Recréez l'environnement virtuel
+
 ### Problème : "Port 8002 already in use"
 
 **Solution :**
@@ -316,7 +346,8 @@ awsbedrock/
 │   ├── app.js           # JavaScript frontend
 │   └── guide.html       # Guide d'utilisation
 └── documentation/        # Documentation
-    └── PREREQUISITES_ET_INSTALLATION.md  # Ce fichier
+    ├── 01-GUIDE_UTILISATION.md
+    └── 02-PREREQUISITES_ET_INSTALLATION.md  # Ce fichier
 ```
 
 ---
