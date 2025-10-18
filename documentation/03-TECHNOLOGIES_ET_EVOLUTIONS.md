@@ -230,23 +230,66 @@ Voici les évolutions pour transformer ce projet POC (Proof of Concept) en appli
 
 **Pourquoi** : Données persistantes, relations complexes
 
-**Implémentation** :
+**Choix de la base de données** :
+
+**Option 1 - Neon (RECOMMANDÉ pour débuter)** :
 ```bash
 pip install sqlalchemy psycopg2-binary alembic
 ```
 
-**Modifications nécessaires** :
-- Créer des modèles SQLAlchemy
-- Remplacer les listes Python par des requêtes SQL
-- Ajouter des migrations de base de données
-- Gérer les transactions
+Avantages :
+- Gratuit pour commencer
+- Serverless (pas de gestion de serveur)
+- Branching de base de données
+- Setup ultra-rapide
+
+**Option 2 - Xata (RECOMMANDÉ pour features avancées)** :
+```bash
+pip install xata sqlalchemy
+```
+
+Avantages :
+- Recherche full-text intégrée
+- File attachments natifs
+- API moderne
+- UI admin élégante
+
+**Option 3 - PostgreSQL classique** :
+- AWS RDS
+- DigitalOcean Managed Database
+- Heroku Postgres
+- Auto-hébergé
+
+**Implémentation avec SQLAlchemy (compatible avec tous)** :
 
 **Fichiers à créer** :
 - `database.py` : Configuration de la base de données
 - `models.py` : Modèles SQLAlchemy
 - `alembic/` : Migrations de schéma
 
-**Exemple de modèle** :
+**1. Configuration (`database.py`)** :
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
+
+# Fonctionne avec Neon, Xata, RDS, etc.
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+**2. Modèles (`models.py`)** :
 ```python
 from sqlalchemy import Column, Integer, String, Float, ARRAY
 from database import Base
@@ -254,15 +297,44 @@ from database import Base
 class Employee(Base):
     __tablename__ = "employees"
     
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    department = Column(String, nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False, index=True)
+    email = Column(String, unique=True, nullable=False, index=True)
+    department = Column(String, nullable=False, index=True)
     position = Column(String, nullable=False)
     skills = Column(ARRAY(String))
     experience_years = Column(Integer)
     salary = Column(Float)
 ```
+
+**3. Modifier `server.py`** :
+```python
+from database import get_db, engine
+from models import Employee as EmployeeModel
+from sqlalchemy.orm import Session
+
+# Remplacer les fonctions de employee_data.py par des requêtes SQL
+@app.get("/api/employees")
+async def get_all_employees(db: Session = Depends(get_db)):
+    employees = db.query(EmployeeModel).all()
+    return employees
+```
+
+**4. Setup avec Neon** :
+1. Créez un compte sur https://neon.tech
+2. Créez un projet
+3. Copiez la connection string
+4. Ajoutez dans `.env` :
+```env
+DATABASE_URL=postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/neondb?sslmode=require
+```
+
+**5. Setup avec Xata** :
+1. Créez un compte sur https://xata.io
+2. Créez une database
+3. Installez le CLI : `npm install -g @xata.io/cli`
+4. Initialisez : `xata init`
+5. La connection string est générée automatiquement
 
 **Temps estimé** : 2-3 jours
 
@@ -525,23 +597,80 @@ services:
 
 **Options** :
 
-**Option A - AWS** :
+**Option A - AWS (Infrastructure complète)** :
 - ECS (Elastic Container Service) + Fargate
 - RDS pour PostgreSQL
 - S3 pour les fichiers
 - CloudFront pour le CDN
 - Route53 pour le DNS
+- **Coût** : ~$65-85/mois
+- **Complexité** : Élevée
+- **Avantages** : Contrôle total, scalabilité maximale
 
-**Option B - Heroku** (plus simple) :
+**Option B - Heroku (Simple et rapide)** :
 ```bash
 heroku create mon-app-rh
 git push heroku main
 ```
+- **Coût** : ~$25-50/mois
+- **Complexité** : Faible
+- **Avantages** : Déploiement en une commande, SSL gratuit
 
-**Option C - DigitalOcean** :
+**Option C - Neon (PostgreSQL Serverless - RECOMMANDÉ)** :
+```bash
+pip install psycopg2-binary
+```
+
+Configuration :
+```python
+# .env
+DATABASE_URL=postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/neondb
+```
+
+Caractéristiques :
+- **PostgreSQL serverless** avec autoscaling
+- **Branching de base de données** (dev, staging, prod)
+- **Free tier généreux** : 0.5 GB stockage, 10 heures compute/mois
+- **Pay-as-you-go** après le free tier
+- **Point-in-time recovery** automatique
+- **Connexions poolées** intégrées
+- **Coût** : Gratuit jusqu'à certaines limites, puis $19+/mois
+- **Complexité** : Très faible
+- **Avantages** : Moderne, rapide, excellent DX, scaling automatique
+
+**Option D - Xata (Base de données moderne)** :
+```bash
+pip install xata
+```
+
+Configuration :
+```python
+from xata.client import XataClient
+
+xata = XataClient(
+    api_key="xau_xxx",
+    db_url="https://workspace.region.xata.sh/db/database"
+)
+```
+
+Caractéristiques :
+- **PostgreSQL compatible** avec API moderne
+- **Recherche full-text** intégrée (Elasticsearch-like)
+- **Branching** par environnement
+- **Schema migrations** automatiques
+- **File attachments** natifs
+- **Free tier** : 15 GB stockage, 250k requêtes/mois
+- **Coût** : Gratuit jusqu'à certaines limites, puis $8+/mois
+- **Complexité** : Faible
+- **Avantages** : API TypeScript/Python élégante, recherche intégrée, UI admin
+
+**Option E - DigitalOcean (Équilibré)** :
 - App Platform
 - Managed PostgreSQL
 - Spaces (S3-compatible)
+- **Coût** : ~$20-40/mois
+- **Complexité** : Moyenne
+- **Avantages** : Prix compétitifs, interface simple
 
 **Temps estimé** : 2-5 jours selon la plateforme
 
@@ -599,43 +728,79 @@ jobs:
 ## Roadmap Suggérée
 
 ### MVP (Minimum Viable Product) - 2-3 semaines
-1. ✅ API REST fonctionnelle (FAIT)
-2. ✅ Interface web basique (FAIT)
-3. ✅ IA avec AWS Bedrock (FAIT)
-4. 🔄 Base de données PostgreSQL
-5. 🔄 Authentification basique
+1. [FAIT] API REST fonctionnelle
+2. [FAIT] Interface web basique
+3. [FAIT] IA avec AWS Bedrock
+4. [TODO] Base de données PostgreSQL
+5. [TODO] Authentification basique
 
 ### Version 1.0 - 1-2 mois
-6. 🔄 Gestion des rôles
-7. 🔄 Upload de fichiers
-8. 🔄 Exports PDF/Excel
-9. 🔄 Notifications email
-10. 🔄 Déploiement production
+6. [TODO] Gestion des rôles
+7. [TODO] Upload de fichiers
+8. [TODO] Exports PDF/Excel
+9. [TODO] Notifications email
+10. [TODO] Déploiement production
 
 ### Version 2.0 - 3-4 mois
-11. 🔄 IA avancée avec RAG
-12. 🔄 Graphiques interactifs avancés
-13. 🔄 Historique des conversations
-14. 🔄 API publique avec rate limiting
-15. 🔄 Application mobile
+11. [TODO] IA avancée avec RAG
+12. [TODO] Graphiques interactifs avancés
+13. [TODO] Historique des conversations
+14. [TODO] API publique avec rate limiting
+15. [TODO] Application mobile
 
 ---
 
 ## Estimation des Coûts en Production
 
-### Coûts AWS (mensuel pour ~100 employés, 1000 requêtes IA/mois)
+### Coûts par Solution (pour ~100 employés, 1000 requêtes IA/mois)
 
+#### Solution AWS Complète
 - **AWS Bedrock** : ~$30-50/mois
 - **RDS PostgreSQL** (db.t3.micro) : ~$15/mois
 - **ECS Fargate** (0.25 vCPU) : ~$15/mois
 - **S3** (stockage fichiers) : ~$5/mois
-- **Total AWS** : ~$65-85/mois
+- **Total** : ~$65-85/mois
+- **Complexité** : Élevée
 
-### Coûts Alternatives
+#### Solution Moderne (RECOMMANDÉ)
+- **Vercel/Netlify** (frontend) : Gratuit
+- **Railway/Render** (backend) : $5-10/mois
+- **Neon** (PostgreSQL) : Gratuit ou $19/mois
+- **AWS Bedrock** : ~$30-50/mois
+- **Total** : ~$35-80/mois
+- **Complexité** : Faible
 
-- **Heroku** : $25-50/mois (dyno + postgres)
-- **DigitalOcean** : $20-40/mois (droplet + database)
-- **Railway** : $5-20/mois (starter plan)
+#### Solution Budget Minimum
+- **Railway** (backend + postgres) : $5-10/mois
+- **Neon Free Tier** : Gratuit
+- **Mode IA Local** (sans AWS) : Gratuit
+- **Total** : ~$5-10/mois
+- **Complexité** : Très faible
+
+#### Solution Heroku Classique
+- **Heroku Dyno** : $7-25/mois
+- **Heroku Postgres** : $9-50/mois
+- **AWS Bedrock** : ~$30-50/mois
+- **Total** : ~$46-125/mois
+- **Complexité** : Faible
+
+#### Solution DigitalOcean
+- **App Platform** : $5-12/mois
+- **Managed PostgreSQL** : $15/mois
+- **AWS Bedrock** : ~$30-50/mois
+- **Total** : ~$50-77/mois
+- **Complexité** : Moyenne
+
+#### Comparaison des Bases de Données
+
+| Service | Free Tier | Prix Payant | Avantages | Inconvénients |
+|---------|-----------|-------------|-----------|---------------|
+| **Neon** | 0.5GB, 10h compute/mois | $19+/mois | Serverless, branching, moderne | Limites compute |
+| **Xata** | 15GB, 250k requêtes/mois | $8+/mois | Recherche intégrée, UI admin | Plus récent |
+| **Supabase** | 500MB, 2GB bandwidth | $25/mois | Auth intégrée, realtime | Plus lourd |
+| **PlanetScale** | 5GB, 1 milliard lectures | $29+/mois | MySQL, branching | Pas PostgreSQL |
+| **RDS AWS** | Aucun (gratuit 12 mois) | $15+/mois | Robuste, mature | Configuration complexe |
+| **Heroku Postgres** | Aucun | $9+/mois | Simple | Plus cher |
 
 ### Coûts de Développement
 
@@ -649,26 +814,26 @@ jobs:
 
 ### Ce qui est RÉEL maintenant :
 
-✅ API REST FastAPI entièrement fonctionnelle
-✅ Interface web moderne et responsive
-✅ CRUD complet des employés
-✅ Statistiques en temps réel
-✅ IA AWS Bedrock (si configurée) avec vraies réponses intelligentes
-✅ Mode local en fallback
+- API REST FastAPI entièrement fonctionnelle
+- Interface web moderne et responsive
+- CRUD complet des employés
+- Statistiques en temps réel
+- IA AWS Bedrock (si configurée) avec vraies réponses intelligentes
+- Mode local en fallback
 
 ### Ce qui est SIMULÉ (pour l'instant) :
 
-⚠️ Données en mémoire (non persistantes)
-⚠️ Pas d'authentification
-⚠️ IA locale basique (sans AWS)
-⚠️ Pas de gestion de fichiers
+- Données en mémoire (non persistantes)
+- Pas d'authentification
+- IA locale basique (sans AWS)
+- Pas de gestion de fichiers
 
 ### Ce projet est parfait pour :
 
-- 📚 Apprendre FastAPI et les API REST
-- 🤖 Découvrir AWS Bedrock et l'IA générative
-- 💼 Créer un POC de système RH
-- 🚀 Base solide pour un projet de production
+- Apprendre FastAPI et les API REST
+- Découvrir AWS Bedrock et l'IA générative
+- Créer un POC de système RH
+- Base solide pour un projet de production
 
 ### Pour aller en production :
 
