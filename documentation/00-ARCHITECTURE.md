@@ -27,11 +27,11 @@ Système simple avec API REST, interface web, et IA en mode local. Toutes les do
 
 ```mermaid
 flowchart LR
-    User[👤 Utilisateur]
-    Frontend[🌐 Frontend<br/>HTML + JS]
-    Backend[⚙️ Backend<br/>FastAPI]
-    Data[💾 Données<br/>En Mémoire]
-    AI[🤖 IA<br/>Mode Local]
+    User[Utilisateur]
+    Frontend[Frontend<br/>HTML + JS]
+    Backend[Backend<br/>FastAPI]
+    Data[Données<br/>En Mémoire]
+    AI[IA<br/>Mode Local]
     
     User --> Frontend
     Frontend -->|HTTP/REST| Backend
@@ -106,11 +106,11 @@ graph TB
 
 ```mermaid
 flowchart LR
-    User[👤 Utilisateur]
-    Frontend[🌐 Frontend<br/>HTML + JS]
-    Backend[⚙️ Backend<br/>FastAPI]
-    Data[💾 Données<br/>En Mémoire]
-    AWS[☁️ AWS Bedrock<br/>Claude 3]
+    User[Utilisateur]
+    Frontend[Frontend<br/>HTML + JS]
+    Backend[Backend<br/>FastAPI]
+    Data[Données<br/>En Mémoire]
+    AWS[AWS Bedrock<br/>Claude 3]
     
     User --> Frontend
     Frontend -->|HTTP/REST| Backend
@@ -183,11 +183,11 @@ graph TB
 
 ```mermaid
 flowchart LR
-    User[👤 Utilisateur]
-    Frontend[🌐 Frontend]
-    Backend[⚙️ Backend]
-    DB[💾 PostgreSQL<br/>Neon]
-    AWS[☁️ AWS Bedrock]
+    User[Utilisateur]
+    Frontend[Frontend]
+    Backend[Backend]
+    DB[PostgreSQL<br/>Neon]
+    AWS[AWS Bedrock]
     
     User --> Frontend
     Frontend -->|HTTP/REST| Backend
@@ -262,11 +262,11 @@ graph TB
 
 ```mermaid
 flowchart LR
-    User[👤 Utilisateur]
-    Login[🔐 Login]
-    Auth[🛡️ Auth<br/>Clerk/JWT]
-    Backend[⚙️ Backend<br/>+ RBAC]
-    DB[💾 PostgreSQL<br/>+ Users]
+    User[Utilisateur]
+    Login[Login]
+    Auth[Auth<br/>Clerk/JWT]
+    Backend[Backend<br/>+ RBAC]
+    DB[PostgreSQL<br/>+ Users]
     
     User --> Login
     Login --> Auth
@@ -681,302 +681,285 @@ graph TB
 
 **Repository** : [awsbedrock-demo-19b-react-app](https://github.com/inskillflow/awsbedrock-demo-19b-react-app)
 
-### Vue d'Ensemble Complète
+### Vue d'Ensemble Ultra-Simplifiée
 
 ```mermaid
-graph TB
-    subgraph "Clients"
-        WebApp[React App<br/>TypeScript]
-        Mobile[Mobile App]
-        API_Client[API Clients]
-    end
+flowchart TD
+    Users[👥 Utilisateurs<br/>Web + Mobile]
+    CDN[🌐 CloudFront CDN]
+    LB[⚖️ Load Balancer]
+    App[⚙️ Backend API<br/>FastAPI]
+    Agents[🤖 Multi-Agents IA]
+    DB[💾 PostgreSQL<br/>+ pgvector]
+    AWS[☁️ AWS Services<br/>Bedrock + S3 + SES]
+    External[💳 Services Externes<br/>Stripe + Clerk]
     
-    subgraph "CDN & Load Balancing"
-        CloudFront[CloudFront CDN]
-        ALB[Application Load Balancer]
-        RateLimit[Rate Limiter]
-    end
+    Users --> CDN
+    CDN --> LB
+    LB --> App
+    App --> Agents
+    App --> DB
+    App --> AWS
+    App --> External
+    Agents --> AWS
+    Agents --> DB
     
-    subgraph "API Layer"
-        subgraph "Services"
-            Auth[Auth Service<br/>Clerk/JWT]
-            API[Main API<br/>FastAPI]
-            PublicAPI[Public API<br/>Versioned]
-        end
-        
-        subgraph "Business Logic"
-            RBAC[RBAC Engine]
-            Quotas[Quotas Manager]
-            Cache[Redis Cache]
-        end
-    end
-    
-    subgraph "AI Layer - Multi-Agent System"
-        Coordinator[Coordinator<br/>Agent]
-        
-        subgraph "Specialized Agents"
-            HRAgent[HR Analyst<br/>Agent]
-            RecruiterAgent[Recruiter<br/>Agent]
-            CompAgent[Compensation<br/>Agent]
-            CustomAgent[Custom<br/>Agents]
-        end
-        
-        RAG[RAG Engine<br/>Semantic Search]
-        Memory[Conversation<br/>Memory]
-    end
-    
-    subgraph "Data Layer"
-        subgraph "Primary Database"
-            RDS[(RDS PostgreSQL<br/>+ pgvector)]
-            Replicas[(Read Replicas)]
-        end
-        
-        subgraph "Storage"
-            S3_Files[S3 Files]
-            S3_Backups[S3 Backups]
-        end
-        
-        subgraph "Caching"
-            Redis[(Redis)]
-            ElastiCache[(ElastiCache)]
-        end
-    end
-    
-    subgraph "AWS Services"
-        Bedrock[Bedrock<br/>Claude 3 Sonnet]
-        BedrockEmbed[Bedrock Titan<br/>Embeddings]
-        SES[SES<br/>Emails]
-        SNS[SNS<br/>Notifications]
-    end
-    
-    subgraph "External Services"
-        Stripe[Stripe<br/>Payments]
-        Clerk_Ext[Clerk<br/>Auth]
-        Webhooks[Webhooks<br/>Handlers]
-    end
-    
-    subgraph "Monitoring & Observability"
-        CloudWatch[CloudWatch]
-        Grafana[Grafana]
-        Prometheus[Prometheus]
-        Sentry[Sentry]
-        Logs[ELK Stack]
-    end
-    
-    subgraph "CI/CD"
-        GitHub[GitHub]
-        Actions[GitHub Actions]
-        DockerHub[Docker Registry]
-        Terraform[Terraform<br/>IaC]
-    end
-    
-    WebApp --> CloudFront
-    Mobile --> CloudFront
-    API_Client --> ALB
-    
-    CloudFront --> ALB
-    ALB --> RateLimit
-    RateLimit --> Auth
-    
-    Auth --> Clerk_Ext
-    Auth --> API
-    Auth --> PublicAPI
-    
-    API --> RBAC
-    API --> Quotas
-    API --> Cache
-    
-    API --> Coordinator
-    Coordinator --> HRAgent
-    Coordinator --> RecruiterAgent
-    Coordinator --> CompAgent
-    Coordinator --> CustomAgent
-    
-    HRAgent --> RAG
-    RecruiterAgent --> RAG
-    CompAgent --> RAG
-    
-    RAG --> RDS
-    API --> RDS
-    RDS --> Replicas
-    
-    API --> S3_Files
-    RDS --> S3_Backups
-    
-    Cache --> Redis
-    API --> ElastiCache
-    
-    HRAgent --> Bedrock
-    RecruiterAgent --> Bedrock
-    CompAgent --> Bedrock
-    RAG --> BedrockEmbed
-    
-    API --> SES
-    API --> SNS
-    
-    API --> Stripe
-    Stripe --> Webhooks
-    Webhooks --> API
-    
-    API --> CloudWatch
-    API --> Sentry
-    CloudWatch --> Grafana
-    CloudWatch --> Prometheus
-    API --> Logs
-    
-    GitHub --> Actions
-    Actions --> DockerHub
-    Actions --> Terraform
-    Terraform --> ALB
-    
-    Memory --> RDS
-    Coordinator --> Memory
-    
-    style WebApp fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
-    style Mobile fill:#059669,stroke:#333,stroke-width:2px,color:#fff
-    style API_Client fill:#047857,stroke:#333,stroke-width:2px,color:#fff
-    style CloudFront fill:#FF9900,stroke:#333,stroke-width:3px,color:#000
-    style ALB fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
-    style RateLimit fill:#F59E0B,stroke:#333,stroke-width:2px,color:#000
-    style Auth fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
-    style API fill:#009688,stroke:#333,stroke-width:2px,color:#fff
-    style PublicAPI fill:#059669,stroke:#333,stroke-width:2px,color:#fff
-    style RBAC fill:#DC2626,stroke:#333,stroke-width:2px,color:#fff
-    style Quotas fill:#B91C1C,stroke:#333,stroke-width:2px,color:#fff
-    style Cache fill:#991B1B,stroke:#333,stroke-width:2px,color:#fff
-    style Coordinator fill:#0891B2,stroke:#333,stroke-width:3px,color:#fff
-    style HRAgent fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
-    style RecruiterAgent fill:#155E75,stroke:#333,stroke-width:2px,color:#fff
-    style CompAgent fill:#0C4A6E,stroke:#333,stroke-width:2px,color:#fff
-    style CustomAgent fill:#075985,stroke:#333,stroke-width:2px,color:#fff
-    style RAG fill:#DC2626,stroke:#333,stroke-width:3px,color:#fff
-    style Memory fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
-    style RDS fill:#1E40AF,stroke:#333,stroke-width:3px,color:#fff
-    style Replicas fill:#3B82F6,stroke:#333,stroke-width:2px,color:#fff
-    style S3_Files fill:#FF9900,stroke:#333,stroke-width:2px,color:#000
-    style S3_Backups fill:#F59E0B,stroke:#333,stroke-width:2px,color:#000
-    style Redis fill:#DC382D,stroke:#333,stroke-width:3px,color:#fff
-    style ElastiCache fill:#B91C1C,stroke:#333,stroke-width:2px,color:#fff
-    style Bedrock fill:#FF6600,stroke:#333,stroke-width:3px,color:#fff
-    style BedrockEmbed fill:#FF9900,stroke:#333,stroke-width:2px,color:#000
-    style SES fill:#DD4814,stroke:#333,stroke-width:2px,color:#fff
-    style SNS fill:#E97435,stroke:#333,stroke-width:2px,color:#fff
-    style Stripe fill:#635BFF,stroke:#333,stroke-width:3px,color:#fff
-    style Clerk_Ext fill:#6C5CE7,stroke:#333,stroke-width:2px,color:#fff
-    style Webhooks fill:#5B21B6,stroke:#333,stroke-width:2px,color:#fff
-    style CloudWatch fill:#DD4814,stroke:#333,stroke-width:2px,color:#fff
-    style Grafana fill:#F46800,stroke:#333,stroke-width:2px,color:#fff
-    style Prometheus fill:#E6522C,stroke:#333,stroke-width:2px,color:#fff
-    style Sentry fill:#362D59,stroke:#333,stroke-width:2px,color:#fff
-    style Logs fill:#2C3E50,stroke:#333,stroke-width:2px,color:#fff
-    style GitHub fill:#24292E,stroke:#333,stroke-width:2px,color:#fff
-    style Actions fill:#2088FF,stroke:#333,stroke-width:2px,color:#fff
-    style DockerHub fill:#2496ED,stroke:#333,stroke-width:2px,color:#fff
-    style Terraform fill:#7B42BC,stroke:#333,stroke-width:2px,color:#fff
+    style Users fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style CDN fill:#FF9900,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style LB fill:#FF6600,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style App fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Agents fill:#0891B2,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style AWS fill:#DD4814,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style External fill:#635BFF,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
 ```
 
-### Architecture Enterprise Complète
+### Diagramme 1 : Flux Frontend → Backend
 
 ```mermaid
-graph TB
-    subgraph "Multi-Tenant Architecture"
-        subgraph "Tenant A"
-            TenantA_Data[(Tenant A Data)]
-            TenantA_Schema[Schema A]
-        end
-        
-        subgraph "Tenant B"
-            TenantB_Data[(Tenant B Data)]
-            TenantB_Schema[Schema B]
-        end
-        
-        TenantRouter[Tenant Router]
-        TenantResolver[Tenant Resolver]
-    end
+flowchart LR
+    React[⚛️ React App]
+    CDN[CloudFront]
+    LB[Load Balancer]
+    Auth[🔐 Auth]
+    API[FastAPI]
     
-    subgraph "API Gateway"
-        Gateway[API Gateway]
-        Versioning[API Versioning<br/>v1, v2, v3]
-        RateLimit[Rate Limiting<br/>Per Tenant]
-        Analytics[API Analytics]
-    end
+    React --> CDN
+    CDN --> LB
+    LB --> Auth
+    Auth --> API
     
-    subgraph "Microservices"
-        EmployeeService[Employee Service]
-        AIService[AI Service]
-        PaymentService[Payment Service]
-        NotificationService[Notification Service]
-        FileService[File Service]
-    end
+    style React fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style CDN fill:#FF9900,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style LB fill:#FF6600,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Auth fill:#6C5CE7,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+### Diagramme 2 : Backend → Base de Données
+
+```mermaid
+flowchart TD
+    API[⚙️ FastAPI API]
+    ORM[SQLAlchemy]
+    DB[(PostgreSQL<br/>+ pgvector)]
+    Replicas[(Replicas)]
+    Cache[(Redis Cache)]
     
-    subgraph "Message Queue"
-        Queue[Message Queue<br/>SQS/RabbitMQ]
-        EventBus[Event Bus]
-        Workers[Background Workers]
-    end
+    API --> ORM
+    API --> Cache
+    ORM --> DB
+    DB --> Replicas
     
-    subgraph "Security"
-        WAF[WAF<br/>Web Application Firewall]
-        Shield[AWS Shield<br/>DDoS Protection]
-        Secrets[Secrets Manager]
-        KMS[KMS<br/>Encryption]
-    end
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style ORM fill:#336791,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style Replicas fill:#3B82F6,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Cache fill:#DC382D,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+### Diagramme 3 : Système Multi-Agents IA
+
+```mermaid
+flowchart TD
+    Question[❓ Question Utilisateur]
+    Coord[🎯 Coordinator]
+    HR[📊 HR Agent]
+    Recruiter[🔍 Recruiter]
+    Comp[💰 Compensation]
+    RAG[RAG Engine]
+    Bedrock[☁️ AWS Bedrock]
+    DB[(PostgreSQL)]
     
-    Gateway --> TenantRouter
-    TenantRouter --> TenantResolver
+    Question --> Coord
+    Coord --> HR
+    Coord --> Recruiter
+    Coord --> Comp
     
-    TenantResolver --> TenantA_Schema
-    TenantResolver --> TenantB_Schema
+    HR --> RAG
+    Recruiter --> RAG
+    Comp --> RAG
     
-    Gateway --> Versioning
-    Gateway --> RateLimit
-    Gateway --> Analytics
+    HR --> Bedrock
+    Recruiter --> Bedrock
+    Comp --> Bedrock
     
-    Versioning --> EmployeeService
-    Versioning --> AIService
-    Versioning --> PaymentService
-    Versioning --> NotificationService
-    Versioning --> FileService
+    RAG --> DB
     
-    EmployeeService --> Queue
-    AIService --> Queue
-    PaymentService --> Queue
-    NotificationService --> Queue
+    style Question fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style Coord fill:#0891B2,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style HR fill:#0E7490,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Recruiter fill:#155E75,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Comp fill:#0C4A6E,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style RAG fill:#DC2626,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Bedrock fill:#FF6600,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style DB fill:#1E40AF,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+### Diagramme 4 : Services Externes
+
+```mermaid
+flowchart LR
+    API[⚙️ Backend API]
+    S3[📁 AWS S3]
+    Email[📧 SES Email]
+    Stripe[💳 Stripe]
+    Clerk[🔐 Clerk Auth]
     
+    API --> S3
+    API --> Email
+    API --> Stripe
+    API --> Clerk
+    
+    style API fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style S3 fill:#FF9900,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style Email fill:#DD4814,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Stripe fill:#635BFF,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Clerk fill:#6C5CE7,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+### Diagramme 5 : Déploiement CI/CD
+
+```mermaid
+flowchart LR
+    Dev[👨‍💻 Developer]
+    GitHub[GitHub]
+    Actions[GitHub Actions]
+    Docker[🐳 Docker Build]
+    ECS[AWS ECS]
+    
+    Dev --> GitHub
+    GitHub --> Actions
+    Actions --> Docker
+    Docker --> ECS
+    
+    style Dev fill:#2C3E50,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style GitHub fill:#24292E,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Actions fill:#2088FF,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Docker fill:#2496ED,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style ECS fill:#FF9900,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+```
+
+### Diagramme 6 : Monitoring
+
+```mermaid
+flowchart TD
+    App[⚙️ Application]
+    CloudWatch[CloudWatch]
+    Prometheus[Prometheus]
+    Grafana[📊 Grafana]
+    Sentry[🐛 Sentry]
+    
+    App --> CloudWatch
+    App --> Sentry
+    CloudWatch --> Prometheus
+    Prometheus --> Grafana
+    
+    style App fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style CloudWatch fill:#DD4814,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Prometheus fill:#E6522C,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Grafana fill:#F46800,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Sentry fill:#362D59,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+### Architecture Enterprise - Diagrammes Simplifiés
+
+#### Diagramme 7A : Multi-Tenant (Isolation des Données)
+
+```mermaid
+flowchart TD
+    Gateway[🌐 API Gateway]
+    Router[🔀 Tenant Router]
+    
+    TenantA[🏢 Tenant A<br/>Company A]
+    TenantB[🏢 Tenant B<br/>Company B]
+    
+    DBA[(DB Schema A)]
+    DBB[(DB Schema B)]
+    
+    Gateway --> Router
+    Router -->|tenant=A| TenantA
+    Router -->|tenant=B| TenantB
+    
+    TenantA --> DBA
+    TenantB --> DBB
+    
+    style Gateway fill:#047857,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Router fill:#059669,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style TenantA fill:#EF4444,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style TenantB fill:#3B82F6,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style DBA fill:#DC2626,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style DBB fill:#1D4ED8,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+#### Diagramme 7B : Microservices
+
+```mermaid
+flowchart TD
+    Gateway[API Gateway]
+    
+    Emp[👥 Employee Service]
+    AI[🤖 AI Service]
+    Pay[💳 Payment Service]
+    Notif[📧 Notification Service]
+    File[📁 File Service]
+    
+    Gateway --> Emp
+    Gateway --> AI
+    Gateway --> Pay
+    Gateway --> Notif
+    Gateway --> File
+    
+    style Gateway fill:#047857,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Emp fill:#0891B2,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style AI fill:#0E7490,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Pay fill:#155E75,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Notif fill:#0C4A6E,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style File fill:#075985,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+#### Diagramme 7C : Message Queue (Tâches Asynchrones)
+
+```mermaid
+flowchart LR
+    Services[⚙️ Services]
+    Queue[📬 Message Queue<br/>SQS/RabbitMQ]
+    EventBus[Event Bus]
+    Workers[👷 Background Workers]
+    
+    Services --> Queue
     Queue --> EventBus
     EventBus --> Workers
     
-    Gateway --> WAF
+    style Services fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Queue fill:#F59E0B,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style EventBus fill:#D97706,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Workers fill:#B45309,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+```
+
+#### Diagramme 7D : Sécurité
+
+```mermaid
+flowchart TD
+    Internet[🌍 Internet]
+    WAF[🛡️ WAF<br/>Firewall]
+    Shield[AWS Shield<br/>DDoS]
+    App[Application]
+    Secrets[🔑 Secrets Manager]
+    KMS[🔐 KMS Encryption]
+    
+    Internet --> WAF
     WAF --> Shield
+    Shield --> App
+    App --> Secrets
+    App --> KMS
     
-    EmployeeService --> Secrets
-    PaymentService --> Secrets
-    
-    TenantA_Data --> KMS
-    TenantB_Data --> KMS
-    
-    style TenantA_Data fill:#EF4444,stroke:#333,stroke-width:2px,color:#fff
-    style TenantB_Data fill:#3B82F6,stroke:#333,stroke-width:2px,color:#fff
-    style TenantA_Schema fill:#DC2626,stroke:#333,stroke-width:2px,color:#fff
-    style TenantB_Schema fill:#1D4ED8,stroke:#333,stroke-width:2px,color:#fff
-    style TenantRouter fill:#059669,stroke:#333,stroke-width:3px,color:#fff
-    style TenantResolver fill:#047857,stroke:#333,stroke-width:2px,color:#fff
-    style Gateway fill:#047857,stroke:#333,stroke-width:3px,color:#fff
-    style Versioning fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
-    style RateLimit fill:#10B981,stroke:#333,stroke-width:2px,color:#fff
-    style Analytics fill:#059669,stroke:#333,stroke-width:2px,color:#fff
-    style EmployeeService fill:#0891B2,stroke:#333,stroke-width:2px,color:#fff
-    style AIService fill:#0E7490,stroke:#333,stroke-width:2px,color:#fff
-    style PaymentService fill:#155E75,stroke:#333,stroke-width:2px,color:#fff
-    style NotificationService fill:#0C4A6E,stroke:#333,stroke-width:2px,color:#fff
-    style FileService fill:#075985,stroke:#333,stroke-width:2px,color:#fff
-    style Queue fill:#F59E0B,stroke:#333,stroke-width:3px,color:#000
-    style EventBus fill:#D97706,stroke:#333,stroke-width:2px,color:#fff
-    style Workers fill:#B45309,stroke:#333,stroke-width:2px,color:#fff
-    style WAF fill:#DC2626,stroke:#333,stroke-width:3px,color:#fff
-    style Shield fill:#991B1B,stroke:#333,stroke-width:2px,color:#fff
-    style Secrets fill:#7C3AED,stroke:#333,stroke-width:2px,color:#fff
-    style KMS fill:#5B21B6,stroke:#333,stroke-width:2px,color:#fff
+    style Internet fill:#61DAFB,stroke:#333,stroke-width:4px,color:#000,font-size:18px
+    style WAF fill:#DC2626,stroke:#333,stroke-width:5px,color:#fff,font-size:18px
+    style Shield fill:#991B1B,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style App fill:#009688,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style Secrets fill:#7C3AED,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
+    style KMS fill:#5B21B6,stroke:#333,stroke-width:4px,color:#fff,font-size:18px
 ```
 
 ### Stack Technologique Complet
